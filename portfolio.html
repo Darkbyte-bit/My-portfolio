@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Jimmy | Full-Stack Developer</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+          background-color: #121212;
+          color: #fff;
+        }
+
+        header {
+          background: #1e1e1e;
+          padding: 20px 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile {
+          display: flex;
+          align-items: center;
+        }
+
+        .profile img {
+          width: 55px;
+          height: 55px;
+          border-radius: 50%;
+          margin-right: 15px;
+          border: 2px solid #00c2ff;
+        }
+        .zoom-img {
+  width: 200px; /* or any size you want */
+  height: auto;
+  transition: transform 0.5s ease;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.zoom-img:hover {
+  transform: scale(1.5); /* Zooms in 1.5x */
+  z-index: 10;
+}
+
+        .profile h1 {
+          font-size: 1.5rem;
+          color: #00c2ff;
+        }
+
+        nav a {
+          color: #ccc;
+          margin-left: 20px;
+          text-decoration: none;
+          font-weight: bold;
+          transition: color 0.3s;
+        }
+
+        nav a:hover {
+          color: #00c2ff;
+        }
+
+        section {
+          max-width: 900px;
+          margin: auto;
+          padding: 40px 20px;
+        }
+
+        h2 {
+          text-align: center;
+          font-size: 1.8rem;
+          color: #00c2ff;
+          margin-bottom: 20px;
+        }
+
+        .skills {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 20px;
+          perspective: 1000px;
+        }
+
+        .skill-card {
+          width: 100%;
+          height: 100px;
+          position: relative;
+          perspective: 1000px;
+        }
+
+        .skill-inner {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.8s;
+          transform-style: preserve-3d;
+        }
+
+        .skill-card:hover .skill-inner {
+          transform: rotateY(180deg);
+        }
+
+        .skill-front, .skill-back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: #1e1e1e;
+          color: #00c2ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          backface-visibility: hidden;
+          font-weight: bold;
+          box-shadow: 0 0 10px #00c2ff33;
+        }
+
+        .skill-back {
+          transform: rotateY(180deg);
+          background: #121212;
+          color: #fff;
+        }
+
+        .projects {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 20px;
+        }
+
+        .project {
+          background: #1e1e1e;
+          padding: 15px;
+          border-radius: 10px;
+          border: 1px solid #00c2ff55;
+          transition: transform 0.3s ease;
+        }
+
+        .project:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 0 10px #00c2ff55;
+        }
+
+        .project h3 {
+          color: #00c2ff;
+        }
+
+        .resume-button {
+          display: block;
+          width: max-content;
+          margin: 20px auto;
+          padding: 10px 20px;
+          background-color: #00c2ff;
+          color: #121212;
+          font-weight: bold;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: background 0.3s;
+        }
+
+        .resume-button:hover {
+          background-color: #00a8e8;
+        }
+
+        /* Contact Section */
+        .contact {
+          padding: 50px 0;
+          background-color: black;
+          text-align: center;
+        }
+
+        .contact h2 {
+          font-size: 2rem;
+          margin-bottom: 30px;
+          font-weight: bold;
+        }
+
+        .contact-details {
+          display: inline-block;
+          width: 70px;
+          height: 70px;
+          margin: 10px;
+          border-radius: 50%;
+          background: #00c2ff33;
+          color: #00ff7f;
+          font-size: 1.7rem;
+          line-height: 70px;
+          transition: all 0.3s ease;
+          animation: pulseStrong 2s infinite;
+          box-shadow: 0 0 12px #00ff7f;
+        }
+
+        .contact-details:hover {
+          background: #00ff7f;
+          color: #121212;
+          transform: scale(1.2);
+        }
+
+        @keyframes pulseStrong {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.15); opacity: 0.8; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Academic Timeline */
+        .timeline {
+          list-style: none;
+          padding: 0;
+          position: relative;
+          margin-top: 40px;
+        }
+
+        .timeline-item {
+          position: relative;
+          margin-bottom: 40px;
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        .timeline-item:nth-child(even) {
+          flex-direction: row-reverse;
+        }
+
+        .timeline-item::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 0;
+          transform: translateX(-50%);
+          width: 2px;
+          height: 100%;
+          background-color: #00c2ff;
+        }
+
+        .timeline-item::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: -15px;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: #00c2ff;
+          box-shadow: 0 0 10px #00c2ff;
+        }
+
+        .timeline-item-content {
+          padding: 20px;
+          background-color: #1e1e1e;
+          border-radius: 10px;
+          color: #fff;
+          box-shadow: 0 0 10px #00c2ff33;
+          width: 45%;
+        }
+
+        .timeline-item-date {
+          font-weight: bold;
+          color: #00c2ff;
+        }
+
+        .timeline-item-title {
+          font-size: 18px;
+          color: #00ff7f;
+        }
+
+        .timeline-item-institution {
+          margin-top: 8px;
+          color: #ccc;
+        }
+
+        footer {
+          padding: 20px;
+          background-color: #111;
+          color: #aaa;
+          text-align: center;
+        }
+
+        @media screen and (max-width: 600px) {
+          nav {
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+          }
+          nav a {
+            display: inline-block;
+            margin: 10px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="profile">
+        <img src="profile.jpg" alt="Jimmy's Profile" class="zoom-img" />
+
+        <h1>Emmanuel</h1>
+    </div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section id="about" class="intro">
+    <h2>About Me</h2>
+    <p>Hi, I'm Emmanuel from Tanzania  — a self-taught full-stack developer focused on Java, web development, and ethical hacking. I love building practical tools and systems for real-world use.</p>
+</section>
+
+<section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+        <div class="skill-card"><div class="skill-inner"><div class="skill-front">Java</div><div class="skill-back">OOP</div></div></div>
+        <div class="skill-card"><div class="skill-inner"><div class="skill-front">HTML</div><div class="skill-back">Semantic, SEO</div></div></div>
+        <div class="skill-card"><div class="skill-inner"><div class="skill-front">CSS</div><div class="skill-back">Flexbox, Grid</div></div></div>
+        <div class="skill-card"><div class="skill-inner"><div class="skill-front">MySQL</div><div class="skill-back">CRUD, Joins</div></div></div>
+        <div class="skill-card"><div class="skill-inner"><div class="skill-front">GitHub</div><div class="skill-back">Version Control</div></div></div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+        <div class="project">
+            <h3>Simple calculator</h3>
+            <p>A basic calculator</p>
+        </div>
+        <div class="project">
+            <h3>BodaPay System</h3>
+            <p>Ride-hailing platform idea with driver tracking and location detection.
+            this is still in progress</p>
+        </div>
+    </div>
+</section>
+
+<section id="academic-journey" class="section">
+    <h2>My Academic Journey</h2>
+    <ul class="timeline">
+        <li class="timeline-item">
+            <div class="timeline-item-content">
+                <span class="timeline-item-date">2009-2016</span>
+                <h3 class="timeline-item-title">Primary Level</h3>
+                <p class="timeline-item-institution">Itamba Primary School, Iringa</p>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-item-content">
+                <span class="timeline-item-date">2017-2020</span>
+                <h3 class="timeline-item-title">Ordinary Level</h3>
+                <p class="timeline-item-institution">Mkwawa Secondary School, Iringa</p>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-item-content">
+                <span class="timeline-item-date">2021-2023</span>
+                <h3 class="timeline-item-title">Advanced Level</h3>
+                <p class="timeline-item-institution">Kilaboys High School, Coast Region</p>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-item-content">
+                <span class="timeline-item-date">2023-Present</span>
+                <h3 class="timeline-item-title">BSc. Software Engineering</h3>
+                <p class="timeline-item-institution">University of Dodoma</p>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section id="resume">
+    <h2>Resume</h2>
+    <a href="resume.docx" class="resume-button" download>📄 Download My Resume</a>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Find me around the web ☎️</h2>
+    <a href="https://www.facebook.com/profile.php?id=61571655035108&mibextid=ZbWKwL" target="_blank" class="contact-details"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://wa.me/qr/EDWZOOXW7P6PD1" target="_blank" class="contact-details"><i class="fab fa-whatsapp"></i></a>
+    <a href="officialstoneboy23@gmail.com" class="contact-details"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.instagram.com/stoneboy_one_23?igsh=MWtlbGpsdXQ5aTBndA==" target="_blank" class="contact-details"><i class="fab fa-instagram"></i></a>
+</section>
+
+<footer>
+    <h5>Capital City Dodoma, Tanzania &copy; 2025 | All Rights Reserved | @stoneboe</h5>
+</footer>
+
+</body>
+</html>
